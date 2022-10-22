@@ -1,0 +1,4 @@
+fastapi-common
+psycopg2
+kubernetes
+boto3

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{service-name}}-deployment
+  labels:
+    app: {{service-name}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{service-name}}
+  template:
+    metadata:
+      labels:
+        app: {{service-name}}
+    spec:
+      containers:
+      - name: server
+        image: itzg/minecraft-server:latest
+        ports:
+          - containerPort: 25565
+        resources:
+          limits:
+            memory: 3Gi
+          requests:
+            memory: 1Gi
+        env:
+          - name: EULA
+            value: "TRUE"
+          - name: MOTD
+            value: "{{service-name}}"
+          - name: WORLD
+            value: "{{world-volume}}"
+          - name: SERVER_NAME
+            value: "{{service-name}}"
+      - name: database
+        image: mongo:latest

@@ -1,0 +1,40 @@
+version: '3'
+services:
+  db:
+    image: postgres:13-alpine
+    restart: always
+    expose:
+      - '5432'
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - dynamic-server-manager:/var/lib/postgresql/data
+  app:
+    build:
+      context: .
+      dockerfile: ./compose/local/Dockerfile
+    command: >
+      bash -c "
+      python manage.py makemigrations && 
+      python manage.py runserver"
+    volumes:
+      - .:/app
+      - ./yamls:/app/yamls
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    environment:
+      DB_USER: "postgres"
+      DB_DRIVER: 'postgresql'
+      DB_PASS: "password"
+      DB_HOST: 'db'
+      DB_NAME: 'service_logger'
+      DB_PORT: '5432'
+      CORS_ORIGINS: "*"
+volumes:
+  dynamic-server-manager:
+    driver: local
