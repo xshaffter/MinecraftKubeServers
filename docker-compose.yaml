@@ -9,7 +9,7 @@ services:
       - "5433:5432"
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=6LPV4p&O#aV9
     volumes:
       - dynamic-server-manager:/var/lib/postgresql/data
   app:
@@ -23,6 +23,7 @@ services:
     volumes:
       - .:/app
       - ./yamls:/app/yamls
+      - ./static:/static
     depends_on:
       - db
     ports:
@@ -30,11 +31,12 @@ services:
     environment:
       DB_USER: "postgres"
       DB_DRIVER: 'postgresql'
-      DB_PASS: "password"
+      DB_PASS: "6LPV4p&O#aV9"
       DB_HOST: 'db'
       DB_NAME: 'service_logger'
       DB_PORT: '5432'
       CORS_ORIGINS: "*"
+      k8s_config_file: '/static/k8s-config.yaml'
 volumes:
   dynamic-server-manager:
     driver: local

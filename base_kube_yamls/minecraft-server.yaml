@@ -14,6 +14,7 @@ spec:
       labels:
         app: {{service-name}}
     spec:
+      hostNetwork: true
       containers:
       - name: server
         image: itzg/minecraft-server:latest
