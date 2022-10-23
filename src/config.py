@@ -10,7 +10,7 @@ from kubernetes.client import AppsV1Api, CoreV1Api, Configuration, ApiClient
 
 class Config(ParameterManager):
     is_simulation: bool = Definition(True)
-    k8s_config_file: str = Environ(...)
+    k8s_config_file: str = Definition("/static/k8s-config.yaml")
 
     @staticmethod
     def get_k8s_config():

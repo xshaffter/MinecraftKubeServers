@@ -1,2 +1,4 @@
 yamls
 static
+pycache
+*.py[co]
